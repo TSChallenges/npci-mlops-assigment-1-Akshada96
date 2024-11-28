@@ -8,28 +8,34 @@ def grep(pattern, file_name):
     return 
 
 def sed(old_pattern, new_patten, file_name):
-    # ... 
+    with open(file_name,'r') as fp:
+        fp_lines = fp.readlines()
+    with open(file_name, 'w') as fp:
+        for line in fp_lines:
+            fp.write(re.sub(old_pattern,new_patten,line))
     return 
 
 def awk(n, file_name):
-    # ...
+    with open(file_name, 'r') as fp:
+        for line in fp:
+            word = re.split(" ",line,n)
+            print(word[n-1])
     return 
 
 def main():
-    file_name = input("Enter the file name")
-    command  = input("Enter the command: grep, sed, awk")
+    file_name = input("Enter the file name: ")
+    command  = input("Enter the command(grep, sed, awk): ")
 
     if command == 'grep':
-        pattern = input("Enter the pattern")
+        pattern = input("Enter the pattern: ")
         grep(pattern, file_name);
     elif command == 'sed':
-        old_pattern = input("Enter old pattern")
-        new_pattern = input("Enter new pattern")
+        old_pattern = input("Enter old pattern: ")
+        new_pattern = input("Enter new pattern: ")
         sed(old_pattern, new_pattern, file_name)
     elif command == 'awk':
-        n = input("Enter the column number")
-        num = int(n)
-        awk(n, file_name)
+        n = input("Enter the column number: ")
+        awk(int(n), file_name)
     else:
         print("Comamnd is invalid")
 
